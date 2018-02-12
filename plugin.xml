@@ -1,0 +1,20 @@
+<library path="src">
+  <class name="Robin GCS" type="rqt_robin_gcs.robin_gcs.RobinGCS" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      A Python-based GUI interface to assist with calibrating managing the robin flight controller
+    </description>
+    <qtgui>
+      <!-- optional grouping...
+      <group>
+        <label>Group</label>
+      </group>
+      <group>
+        <label>Subgroup</label>
+      </group>
+      -->
+      <label>Robin GCS</label>
+      <icon type="theme">system-help</icon>
+      <statustip>GCS interface for the robin flight controller</statustip>
+    </qtgui>
+  </class>
+</library>
