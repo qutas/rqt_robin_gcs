@@ -9,6 +9,7 @@ from python_qt_binding.QtWidgets import QWidget
 
 import mavros
 from mavros.utils import *
+from mavros.param import *
 from mavros import command
 
 class RobinGCS(Plugin):
@@ -51,6 +52,7 @@ class RobinGCS(Plugin):
 
 		self._widget.button_cal_accel.clicked.connect(self.button_cal_accel_pressed)
 		self._widget.button_cal_gyro.clicked.connect(self.button_cal_gyro_pressed)
+		self._widget.button_cal_esc.clicked.connect(self.button_cal_esc_pressed)
 		self._widget.button_reboot_bootloader.clicked.connect(self.button_reboot_bootloader_pressed)
 		self._widget.button_reboot_system.clicked.connect(self.button_reboot_system_pressed)
 		self._widget.button_update_namespace.clicked.connect(self.button_update_namespace_pressed)
@@ -84,6 +86,12 @@ class RobinGCS(Plugin):
 	def button_cal_gyro_pressed(self):
 		self.call_command(241, 1, 0, 0, 0, 0, 0, 0)
 		rospy.loginfo("DEBUG: Cal gyro button pressed!")
+
+	def button_cal_esc_pressed(self):
+		rospy.loginfo(param_set("DO_ESC_CAL", 1))
+		rospy.logwarn("If calibrate ESC parameter set, write params and reboot to complete calibration")
+		rospy.logwarn("---\n\nMake sure props are detached!\n\n---")
+		rospy.loginfo("DEBUG: Cal esc button pressed!")
 
 	def button_reboot_bootloader_pressed(self):
 		self.call_command(246, 3, 0, 0, 0, 0, 0, 0)

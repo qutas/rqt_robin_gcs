@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>260</width>
-    <height>370</height>
+    <height>410</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>260</width>
-    <height>370</height>
+    <height>410</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -162,7 +162,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>180</y>
+     <y>220</y>
      <width>241</width>
      <height>30</height>
     </rect>
@@ -187,7 +187,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>210</y>
+     <y>250</y>
      <width>241</width>
      <height>50</height>
     </rect>
@@ -200,7 +200,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>280</y>
+     <y>320</y>
      <width>241</width>
      <height>30</height>
     </rect>
@@ -225,7 +225,7 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>310</y>
+     <y>350</y>
      <width>120</width>
      <height>50</height>
     </rect>
@@ -241,13 +241,29 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>310</y>
+     <y>350</y>
      <width>120</width>
      <height>50</height>
     </rect>
    </property>
    <property name="text">
     <string>System</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="button_cal_esc">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>170</y>
+     <width>120</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Calibrate ESCs</string>
    </property>
   </widget>
  </widget>
