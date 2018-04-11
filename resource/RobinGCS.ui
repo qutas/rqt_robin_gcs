@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MCTuner</class>
- <widget class="QWidget" name="MCTuner">
+ <class>RobinGCS</class>
+ <widget class="QWidget" name="RobinGCS">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Multicopter Tuner</string>
+   <string>Robin GCS</string>
   </property>
   <widget class="QPushButton" name="button_cal_gyro">
    <property name="enabled">
