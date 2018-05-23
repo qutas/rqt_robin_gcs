@@ -50,10 +50,11 @@ class RobinGCS(Plugin):
 		# Add widget to the user interface
 		context.add_widget(self._widget)
 
-		self._widget.button_cal_accel.clicked.connect(self.button_cal_accel_pressed)
-		self._widget.button_cal_gyro.clicked.connect(self.button_cal_gyro_pressed)
-		self._widget.button_cal_esc.clicked.connect(self.button_cal_esc_pressed)
-		self._widget.button_cal_rc.clicked.connect(self.button_cal_rc_pressed)
+		#self._widget.button_cal_accel.clicked.connect(self.button_cal_accel_pressed)
+		#self._widget.button_cal_gyro.clicked.connect(self.button_cal_gyro_pressed)
+		#self._widget.button_cal_esc.clicked.connect(self.button_cal_esc_pressed)
+		#self._widget.button_cal_rc.clicked.connect(self.button_cal_rc_pressed)
+		self._widget.button_cal.clicked.connect(self.button_cal_pressed)
 		self._widget.button_reboot_bootloader.clicked.connect(self.button_reboot_bootloader_pressed)
 		self._widget.button_reboot_system.clicked.connect(self.button_reboot_system_pressed)
 		self._widget.button_update_namespace.clicked.connect(self.button_update_namespace_pressed)
@@ -80,39 +81,67 @@ class RobinGCS(Plugin):
 		# This will enable a setting button (gear icon) in each dock widget title bar
 		# Usually used to open a modal configuration dialog
 
-	def button_cal_accel_pressed(self):
-		self.call_command(241, 0, 0, 0, 0, 1, 0, 0)
-		rospy.loginfo("DEBUG: Cal accel button pressed!")
+	#def button_cal_accel_pressed(self):
+	#	self.call_command(241, 0, 0, 0, 0, 1, 0, 0)
+	#	rospy.loginfo("DEBUG: Cal accel button pressed!")
 
-	def button_cal_gyro_pressed(self):
-		self.call_command(241, 1, 0, 0, 0, 0, 0, 0)
-		rospy.loginfo("DEBUG: Cal gyro button pressed!")
+	#def button_cal_gyro_pressed(self):
+	#	self.call_command(241, 1, 0, 0, 0, 0, 0, 0)
+	#	rospy.loginfo("DEBUG: Cal gyro button pressed!")
 
-	def button_cal_esc_pressed(self):
-		rospy.loginfo(param_set("DO_ESC_CAL", 1))
-		rospy.logwarn("If calibrate ESC parameter set, write params and reboot to complete calibration")
-		rospy.logwarn("---\n\nMake sure props are detached!\n\n---")
-		rospy.loginfo("DEBUG: Cal esc button pressed!")
+	#def button_cal_esc_pressed(self):
+	#	rospy.loginfo(param_set("DO_ESC_CAL", 1))
+	#	rospy.logwarn("If calibrate ESC parameter set, write params and reboot to complete calibration")
+	#	rospy.logwarn("---\n\nMake sure props are detached!\n\n---")
+	#	rospy.loginfo("DEBUG: Cal esc button pressed!")
 
-	def button_cal_rc_pressed(self):
-		self.call_command(241, 0, 0, 0, 1, 0, 0, 0)
-		rospy.loginfo("DEBUG: Cal rc button pressed!")
+	#def button_cal_rc_pressed(self):
+	#	self.call_command(241, 0, 0, 0, 1, 0, 0, 0)
+	#	rospy.loginfo("DEBUG: Cal rc button pressed!")
+
+	def button_cal_pressed(self):
+		param1 = 0
+		param2 = 0
+		param3 = 0
+		param4 = 0
+		param5 = 0
+		param6 = 0
+		param7 = 0
+
+		cal = self._widget.combo_cal.currentText()
+
+		if cal == "GYROSCOPE":
+			param1 = 1
+		elif cal == "MAGNETOMETER":
+			param2 = 1
+		elif cal == "GROUND PRESSURE":
+			param3 = 1
+		elif cal == "RC":
+			param4 = 1
+		elif cal == "ACCELEROMETER":
+			param5 = 1
+		elif cal == "LEVEL HORIZON":
+			param5 = 2
+		elif cal == "INTERFERENCE":
+			param6 = 1
+		elif cal == "ESC":
+			param7 = 1
+		elif cal == "BAROMETER":
+			param7 = 3
+
+		self.call_command(241, param1, param2, param3, param4, param5, param6, param7)
 
 	def button_reboot_bootloader_pressed(self):
 		self.call_command(246, 3, 0, 0, 0, 0, 0, 0)
-		rospy.loginfo("DEBUG: Reboot bootloader button pressed!")
 
 	def button_reboot_system_pressed(self):
 		self.call_command(246, 1, 0, 0, 0, 0, 0, 0)
-		rospy.loginfo("DEBUG: Reboot system button pressed!")
 
 	def button_update_namespace_pressed(self):
 		self.update_namespace()
-		rospy.loginfo("DEBUG: Update service name button pressed!")
 
 	def button_write_eeprom_pressed(self):
 		self.call_command(245, 1, 0, 0, 0, 0, 0, 0)
-		rospy.loginfo("DEBUG: Write EEPROM button pressed!")
 
 	def call_command(self, cmd, p1, p2, p3, p4, p5, p6, p7):
 		try:

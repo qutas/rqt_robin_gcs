@@ -25,22 +25,6 @@
   <property name="windowTitle">
    <string>Robin GCS</string>
   </property>
-  <widget class="QPushButton" name="button_cal_gyro">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>120</y>
-     <width>120</width>
-     <height>50</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Calibrate Gyro</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_title">
    <property name="geometry">
     <rect>
@@ -61,22 +45,6 @@
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="button_cal_accel">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>120</y>
-     <width>120</width>
-     <height>50</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Calibrate Accel.</string>
    </property>
   </widget>
   <widget class="QPushButton" name="button_update_namespace">
@@ -250,37 +218,76 @@
     <string>System</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="button_cal_esc">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>170</y>
-     <width>120</width>
-     <height>50</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Calibrate ESCs</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="button_cal_rc">
+  <widget class="QPushButton" name="button_cal">
    <property name="enabled">
     <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>170</y>
+     <y>120</y>
      <width>120</width>
      <height>50</height>
     </rect>
    </property>
    <property name="text">
-    <string>Calibrate RC</string>
+    <string>Calibrate</string>
    </property>
+  </widget>
+  <widget class="QComboBox" name="combo_cal">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>120</y>
+     <width>120</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>GYROSCOPE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MAGNETOMETER</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>GROUND PRESSURE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>RC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>ACCELEROMETER</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LEVEL HORIZON</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>INTERFERENCE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>ESC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>BAROMETER</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources/>
