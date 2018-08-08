@@ -55,6 +55,7 @@ class RobinGCS(Plugin):
 		#self._widget.button_cal_esc.clicked.connect(self.button_cal_esc_pressed)
 		#self._widget.button_cal_rc.clicked.connect(self.button_cal_rc_pressed)
 		self._widget.button_cal.clicked.connect(self.button_cal_pressed)
+		self._widget.button_rc_mode_2.clicked.connect(self.button_rc_mode_2_pressed)
 		self._widget.button_reboot_bootloader.clicked.connect(self.button_reboot_bootloader_pressed)
 		self._widget.button_reboot_system.clicked.connect(self.button_reboot_system_pressed)
 		self._widget.button_update_namespace.clicked.connect(self.button_update_namespace_pressed)
@@ -130,6 +131,20 @@ class RobinGCS(Plugin):
 			param7 = 3
 
 		self.call_command(241, param1, param2, param3, param4, param5, param6, param7)
+
+	def button_rc_mode_2_pressed(self):
+		params = [["RC_MAP_ROLL", 1],
+				  ["RC_MAP_PITCH", 2],
+				  ["RC_MAP_THROTTLE", 3],
+				  ["RC_MAP_YAW", 4],
+				  ["RC_MAP_MODE_SW", 5]]
+		for p in params:
+			try:
+				rospy.loginfo(param_set(p[0], int(p[1])))
+			except IOError as e:
+				rospy.logerr(e)
+
+		rospy.logdebug("Set param button pressed!")
 
 	def button_reboot_bootloader_pressed(self):
 		self.call_command(246, 3, 0, 0, 0, 0, 0, 0)
