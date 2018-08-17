@@ -56,6 +56,7 @@ class RobinGCS(Plugin):
 		#self._widget.button_cal_rc.clicked.connect(self.button_cal_rc_pressed)
 		self._widget.button_cal.clicked.connect(self.button_cal_pressed)
 		self._widget.button_rc_mode_2.clicked.connect(self.button_rc_mode_2_pressed)
+		self._widget.button_mixer_X4.clicked.connect(self.button_mixer_X4_pressed)
 		self._widget.button_reboot_bootloader.clicked.connect(self.button_reboot_bootloader_pressed)
 		self._widget.button_reboot_system.clicked.connect(self.button_reboot_system_pressed)
 		self._widget.button_update_namespace.clicked.connect(self.button_update_namespace_pressed)
@@ -140,11 +141,19 @@ class RobinGCS(Plugin):
 				  ["RC_MAP_MODE_SW", 5]]
 		for p in params:
 			try:
-				rospy.loginfo(param_set(p[0], int(p[1])))
+				rospy.loginfo(p[0] + ": " + str(param_set(p[0], int(p[1]))))
 			except IOError as e:
 				rospy.logerr(e)
 
-		rospy.logdebug("Set param button pressed!")
+		rospy.logdebug("Set RC mode 2 button pressed!")
+
+	def button_mixer_X4_pressed(self):
+		try:
+			rospy.loginfo("SYS_AUTOSTART: " + str(param_set("SYS_AUTOSTART", int(4001))))
+		except IOError as e:
+			rospy.logerr(e)
+
+		rospy.logdebug("Set mixer X4 button pressed!")
 
 	def button_reboot_bootloader_pressed(self):
 		self.call_command(246, 3, 0, 0, 0, 0, 0, 0)

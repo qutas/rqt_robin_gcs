@@ -305,6 +305,22 @@
     <string>Set RC Mode 2</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="button_mixer_X4">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>170</y>
+     <width>120</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Set Mixer QUAD X</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
