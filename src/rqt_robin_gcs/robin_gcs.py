@@ -56,7 +56,7 @@ class RobinGCS(Plugin):
 		#self._widget.button_cal_rc.clicked.connect(self.button_cal_rc_pressed)
 		self._widget.button_cal.clicked.connect(self.button_cal_pressed)
 		self._widget.button_rc_mode_2.clicked.connect(self.button_rc_mode_2_pressed)
-		self._widget.button_mixer_X4.clicked.connect(self.button_mixer_X4_pressed)
+		self._widget.button_motor_test.clicked.connect(self.button_motor_test_pressed)
 		self._widget.button_reboot_bootloader.clicked.connect(self.button_reboot_bootloader_pressed)
 		self._widget.button_reboot_system.clicked.connect(self.button_reboot_system_pressed)
 		self._widget.button_update_namespace.clicked.connect(self.button_update_namespace_pressed)
@@ -147,13 +147,8 @@ class RobinGCS(Plugin):
 
 		rospy.logdebug("Set RC mode 2 button pressed!")
 
-	def button_mixer_X4_pressed(self):
-		try:
-			rospy.loginfo("SYS_AUTOSTART: " + str(param_set("SYS_AUTOSTART", int(4001))))
-		except IOError as e:
-			rospy.logerr(e)
-
-		rospy.logdebug("Set mixer X4 button pressed!")
+	def button_motor_test_pressed(self):
+		self.call_command(209, 255, 0, 0.4, 1.5, 0, 0, 0)
 
 	def button_reboot_bootloader_pressed(self):
 		self.call_command(246, 3, 0, 0, 0, 0, 0, 0)

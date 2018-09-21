@@ -305,7 +305,7 @@
     <string>Set RC Mode 2</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="button_mixer_X4">
+  <widget class="QPushButton" name="button_motor_test">
    <property name="enabled">
     <bool>true</bool>
    </property>
@@ -318,7 +318,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Set Mixer QUAD X</string>
+    <string>Run Motor Test</string>
    </property>
   </widget>
  </widget>
