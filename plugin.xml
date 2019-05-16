@@ -4,14 +4,11 @@
       A Python-based GUI interface to assist with calibrating managing the robin flight controller
     </description>
     <qtgui>
-      <!-- optional grouping...
       <group>
-        <label>Group</label>
+        <label>QUTAS Tools</label>
+        <icon type="theme">folder</icon>
+        <statustip>Plugins developed as part of the QUTAS Flight Stack.</statustip>
       </group>
-      <group>
-        <label>Subgroup</label>
-      </group>
-      -->
       <label>Robin GCS</label>
       <icon type="theme">system-help</icon>
       <statustip>GCS interface for the robin flight controller</statustip>
