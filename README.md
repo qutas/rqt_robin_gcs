@@ -1,6 +1,8 @@
 # rqt_robin_gcs
 Ground Control Station plugin for RQT to assist with flashing and calibration
 
+![Screenshot](/resource/screenshot.png)
+
 ## Download & Compile
 ```sh
 cd ~/catkin_ws/src
