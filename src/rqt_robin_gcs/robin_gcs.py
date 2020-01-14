@@ -7,6 +7,8 @@ from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
 from python_qt_binding.QtWidgets import QWidget
 
+from rqt_robin_gcs.robin_gcs_options import SimpleSettingsDialog
+
 import mavros
 from mavros.utils import *
 from mavros.param import *
@@ -50,56 +52,50 @@ class RobinGCS(Plugin):
 		# Add widget to the user interface
 		context.add_widget(self._widget)
 
-		#self._widget.button_cal_accel.clicked.connect(self.button_cal_accel_pressed)
-		#self._widget.button_cal_gyro.clicked.connect(self.button_cal_gyro_pressed)
-		#self._widget.button_cal_esc.clicked.connect(self.button_cal_esc_pressed)
-		#self._widget.button_cal_rc.clicked.connect(self.button_cal_rc_pressed)
+		self.mavros_namespace = "/mavros"
+
+		self._widget.button_mixer_set.clicked.connect(self.button_mixer_set_pressed)
 		self._widget.button_cal.clicked.connect(self.button_cal_pressed)
 		self._widget.button_rc_mode_2.clicked.connect(self.button_rc_mode_2_pressed)
 		self._widget.button_motor_test.clicked.connect(self.button_motor_test_pressed)
 		self._widget.button_reboot_bootloader.clicked.connect(self.button_reboot_bootloader_pressed)
 		self._widget.button_reboot_system.clicked.connect(self.button_reboot_system_pressed)
-		self._widget.button_update_namespace.clicked.connect(self.button_update_namespace_pressed)
 		self._widget.button_write_eeprom.clicked.connect(self.button_write_eeprom_pressed)
 
 		#mavros.set_namespace("/mavros")
-		self.update_namespace()
+		#self.update_namespace()
 
 	def shutdown_plugin(self):
 		pass
 
 	def save_settings(self, plugin_settings, instance_settings):
-		# TODO save intrinsic configuration, usually using:
-		# instance_settings.set_value(k, v)
-		pass
+		instance_settings.set_value("namespace", self.mavros_namespace)
 
 	def restore_settings(self, plugin_settings, instance_settings):
-		# TODO restore intrinsic configuration, usually using:
-		# v = instance_settings.value(k)
-		pass
+		ns = instance_settings.value("namespace")
+		if ns:
+			self.mavros_namespace = str(ns)
 
-	#def trigger_configuration(self):
-		# Comment in to signal that the plugin has a way to configure
-		# This will enable a setting button (gear icon) in each dock widget title bar
-		# Usually used to open a modal configuration dialog
+		mavros.set_namespace(self.mavros_namespace)
 
-	#def button_cal_accel_pressed(self):
-	#	self.call_command(241, 0, 0, 0, 0, 1, 0, 0)
-	#	rospy.loginfo("DEBUG: Cal accel button pressed!")
+	def trigger_configuration(self):
+		"""Present the user with a dialog for choosing the topic to view,
+		the data type, and other settings used to generate the HUD.
+		This displays a SimpleSettingsDialog asking the user to choose
+		the settings as desired.
 
-	#def button_cal_gyro_pressed(self):
-	#	self.call_command(241, 1, 0, 0, 0, 0, 0, 0)
-	#	rospy.loginfo("DEBUG: Cal gyro button pressed!")
+		This method is blocking"""
 
-	#def button_cal_esc_pressed(self):
-	#	rospy.loginfo(param_set("DO_ESC_CAL", 1))
-	#	rospy.logwarn("If calibrate ESC parameter set, write params and reboot to complete calibration")
-	#	rospy.logwarn("---\n\nMake sure props are detached!\n\n---")
-	#	rospy.loginfo("DEBUG: Cal esc button pressed!")
+		dialog = SimpleSettingsDialog(title='Quaternion View Options')
+		dialog.add_lineedit("namespace", str(self.mavros_namespace), "Namespace")
 
-	#def button_cal_rc_pressed(self):
-	#	self.call_command(241, 0, 0, 0, 1, 0, 0, 0)
-	#	rospy.loginfo("DEBUG: Cal rc button pressed!")
+		settings = dialog.get_settings();
+		if settings is not None:
+			for s in settings:
+				if s[0] == "namespace":
+					self.mavros_namespace = str(s[1])
+
+		mavros.set_namespace(self.mavros_namespace)
 
 	def button_cal_pressed(self):
 		param1 = 0
@@ -176,7 +172,28 @@ class RobinGCS(Plugin):
 
 			self.check_ret(ret)
 		except rospy.ServiceException as ex:
-			fault(ex)
+			rospy.logerr(ex)
+
+	def button_mixer_set_pressed(self):
+		param_id = "SYS_AUTOSTART"
+		mixer_str = str(self._widget.combo_mixer_list.currentText())
+		mixer_val = 0;
+
+		if mixer_str == "Generic Plane":
+			mixer_val = 2100
+		elif mixer_str == "Quadrotor x4":
+			mixer_val = 4001
+		elif mixer_str == "Quadrotor +4":
+			mixer_val = 5001
+		elif mixer_str == "Hexarotor x4":
+			mixer_val = 6001
+
+		try:
+			rospy.loginfo(param_set(param_id, mixer_val))
+		except IOError as e:
+			rospy.logerr(e)
+
+		rospy.logdebug("Set param button pressed!")
 
 	def check_ret(self,ret):
 		if not ret.success:
@@ -184,8 +201,5 @@ class RobinGCS(Plugin):
 
 		rospy.loginfo("Command ACK: %i" % ret.result)
 
-	def update_namespace(self):
-		ns = self._widget.textbox_namespace.text()
-		mavros.set_namespace(ns)
 
 
